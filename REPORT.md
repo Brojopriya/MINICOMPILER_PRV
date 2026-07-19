@@ -148,7 +148,7 @@ Semantic analysis performs static type checking and symbol table management.
 - Invalid condition types
 
 **Time Complexity**: O(n) AST traversal with O(s) symbol lookups = O(n·s)
-**Space Complexity**: O(s) for symbol table where s is symbol count
+**Space Complexity**: O(s) for symbol table where s is symbol count -->
 
 ### 3.5 Intermediate Code Generation (TAC)
 
@@ -194,7 +194,8 @@ Output:
 **Time Complexity**: O(n) single AST traversal
 **Space Complexity**: O(m) where m is size of generated TAC code
 
-## 4. Overall Compiler Complexity
+
+<!-- ## 4. Overall Compiler Complexity
 
 **Combined Time Complexity**:
 - Lexical Analysis: O(n)
