@@ -1,0 +1,13 @@
+int counter;
+int sum;
+
+counter = 0;
+sum = 0;
+
+while (counter < 5)
+{
+    sum = sum + counter;
+    counter = counter + 1;
+}
+
+print(sum);
