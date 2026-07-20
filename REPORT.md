@@ -165,6 +165,50 @@ A semantic log (`phase_3_semantic.txt`) is generated containing declaration info
 
 **Space Complexity**
 - O(s), where `s` is the number of active symbols.
+
+
+#### Symbol Table
+
+The symbol table is implemented using a linked list and maintains scope information for every declared identifier.
+
+**Features**
+- Stores identifier name, data type, and scope level.
+- Prevents duplicate declarations within the same scope.
+- Supports identifier lookup.
+- Supports nested scopes using enter and exit scope operations.
+- Prints the active symbol table for debugging.
+
+#### Semantic Analysis
+
+The semantic analyzer performs the following checks:
+
+- Duplicate variable declaration detection.
+- Undeclared variable usage detection.
+- Assignment type checking.
+- Arithmetic expression type checking.
+- Relational expression type checking.
+- Logical expression type checking.
+- Validation of `if` conditions.
+- Validation of `while` conditions.
+
+#### Error Reporting
+
+The implementation reports:
+- Duplicate declarations.
+- Undeclared identifiers.
+- Type mismatch in assignments.
+- Invalid operand types.
+- Invalid control-statement conditions.
+
+A semantic log (`phase_3_semantic.txt`) is generated containing declaration information, scope transitions, symbol table contents, and semantic errors.
+
+**Time Complexity**
+- Symbol insertion: O(1)
+- Symbol lookup: O(s)
+- Overall semantic analysis: O(n × s)
+
+**Space Complexity**
+- O(s), where `s` is the number of active symbols.
 <!--
 ### 3.5 Intermediate Code Generation (TAC)
 
@@ -210,7 +254,8 @@ Output:
 **Time Complexity**: O(n) single AST traversal
 **Space Complexity**: O(m) where m is size of generated TAC code
 
-## 4. Overall Compiler Complexity
+
+<!-- ## 4. Overall Compiler Complexity
 
 **Combined Time Complexity**:
 - Lexical Analysis: O(n)
