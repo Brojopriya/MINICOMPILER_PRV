@@ -117,39 +117,55 @@ typedef enum {
 **Construction Time**: O(1) per node
 **Total AST Construction**: O(n) where n is number of nodes
 
-<!-- ### 3.4 Semantic Analysis
+ ### 3.4 Semantic Analysis
 
 **Files**: `semantic.h`, `semantic.c`, `symbol_table.h`, `symbol_table.c`
 
-Semantic analysis performs static type checking and symbol table management.
+The semantic analysis phase performs symbol table management and static type checking by traversing the Abstract Syntax Tree (AST).
 
-**Symbol Table Implementation**:
-- Hash-table-like linked list with scope levels
-- Insert: O(1) average case
-- Lookup: O(s) where s is number of symbols
-- Supports nested scoping with enter/exit scope operations
+#### Symbol Table
 
-**Type Checking Rules**:
-1. **Variable Declaration**: Check for duplicate declarations in current scope
-2. **Variable Usage**: Verify all used variables are declared
-3. **Type Compatibility**:
-   - Arithmetic operators require `int` operands → return `int`
-   - Relational operators require matching types → return `bool`
-   - Logical operators require `bool` operands → return `bool`
-   - Assignment requires matching types
-4. **Control Flow**:
-   - `if` condition must be `bool`
-   - `while` condition must be `bool`
+The symbol table is implemented using a linked list and maintains scope information for every declared identifier.
 
-**Error Detection**:
-- Undeclared variable usage
-- Multiple declarations in same scope
-- Type mismatches in assignments and operations
-- Invalid condition types
+**Features**
+- Stores identifier name, data type, and scope level.
+- Prevents duplicate declarations within the same scope.
+- Supports identifier lookup.
+- Supports nested scopes using enter and exit scope operations.
+- Prints the active symbol table for debugging.
 
-**Time Complexity**: O(n) AST traversal with O(s) symbol lookups = O(n·s)
-**Space Complexity**: O(s) for symbol table where s is symbol count
+#### Semantic Analysis
 
+The semantic analyzer performs the following checks:
+
+- Duplicate variable declaration detection.
+- Undeclared variable usage detection.
+- Assignment type checking.
+- Arithmetic expression type checking.
+- Relational expression type checking.
+- Logical expression type checking.
+- Validation of `if` conditions.
+- Validation of `while` conditions.
+
+#### Error Reporting
+
+The implementation reports:
+- Duplicate declarations.
+- Undeclared identifiers.
+- Type mismatch in assignments.
+- Invalid operand types.
+- Invalid control-statement conditions.
+
+A semantic log (`phase_3_semantic.txt`) is generated containing declaration information, scope transitions, symbol table contents, and semantic errors.
+
+**Time Complexity**
+- Symbol insertion: O(1)
+- Symbol lookup: O(s)
+- Overall semantic analysis: O(n × s)
+
+**Space Complexity**
+- O(s), where `s` is the number of active symbols.
+<!--
 ### 3.5 Intermediate Code Generation (TAC)
 
 **Files**: `codegen.h`, `codegen.c`
