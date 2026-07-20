@@ -2,6 +2,75 @@
 #include <stdlib.h>
 #include <string.h>
 
+static void print_indent(FILE *out, int indent) {
+    for (int i = 0; i < indent; ++i) fprintf(out, "  ");
+}
+
+void ast_print(ASTNode *node, FILE *out, int indent) {
+    if (!node) return;
+    print_indent(out, indent);
+    switch (node->type) {
+        case AST_PROGRAM:
+            fprintf(out, "Program\n");
+            ast_print(node->data.program.decl_list, out, indent+1);
+            ast_print(node->data.program.stmt_list, out, indent+1);
+            break;
+        case AST_DECL:
+            fprintf(out, "Decl: %s\n", node->data.decl.id ? node->data.decl.id : "(null)");
+            ast_print(node->data.decl.next, out, indent+1);
+            break;
+        case AST_STMT_LIST:
+            fprintf(out, "StmtList\n");
+            ast_print(node->data.stmt_list.stmts, out, indent+1);
+            ast_print(node->data.stmt_list.next, out, indent);
+            break;
+        case AST_STMT_BLOCK:
+            fprintf(out, "StmtBlock\n");
+            ast_print(node->data.stmt_block.statements, out, indent+1);
+            break;
+        case AST_ASSIGN:
+            fprintf(out, "Assign: %s\n", node->data.assign.id ? node->data.assign.id : "(null)");
+            ast_print(node->data.assign.expr, out, indent+1);
+            break;
+        case AST_IF:
+            fprintf(out, "If\n");
+            ast_print(node->data.if_stmt.cond, out, indent+1);
+            ast_print(node->data.if_stmt.if_block, out, indent+1);
+            ast_print(node->data.if_stmt.else_block, out, indent+1);
+            break;
+        case AST_WHILE:
+            fprintf(out, "While\n");
+            ast_print(node->data.while_stmt.cond, out, indent+1);
+            ast_print(node->data.while_stmt.body, out, indent+1);
+            break;
+        case AST_PRINT:
+            fprintf(out, "Print\n");
+            ast_print(node->data.print_stmt.expr, out, indent+1);
+            break;
+        case AST_EXPR_BINOP:
+            fprintf(out, "BinOp\n");
+            ast_print(node->data.binop.left, out, indent+1);
+            ast_print(node->data.binop.right, out, indent+1);
+            break;
+        case AST_EXPR_UNOP:
+            fprintf(out, "UnOp\n");
+            ast_print(node->data.unop.operand, out, indent+1);
+            break;
+        case AST_EXPR_ID:
+            fprintf(out, "ID: %s\n", node->data.id.name ? node->data.id.name : "(null)");
+            break;
+        case AST_EXPR_INT:
+            fprintf(out, "INT: %d\n", node->data.int_val.value);
+            break;
+        case AST_EXPR_BOOL:
+            fprintf(out, "BOOL: %d\n", node->data.bool_val.value);
+            break;
+        default:
+            fprintf(out, "Unknown node\n");
+            break;
+    }
+}
+
 ASTNode* ast_create_node(NodeType type) {
     ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
     node->type = type;
