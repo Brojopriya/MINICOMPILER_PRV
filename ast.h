@@ -1,6 +1,8 @@
 #ifndef AST_H
 #define AST_H
 
+#include <stdio.h>
+
 typedef enum {
     AST_PROGRAM,
     AST_DECL,
@@ -127,5 +129,6 @@ ASTNode* ast_create_id(char *name);
 ASTNode* ast_create_int(int value);
 ASTNode* ast_create_bool(int value);
 void ast_free(ASTNode *node);
+void ast_print(ASTNode *node, FILE *out, int indent);
 
 #endif
